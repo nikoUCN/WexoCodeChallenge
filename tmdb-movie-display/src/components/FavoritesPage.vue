@@ -1,0 +1,16 @@
+<template>
+    <div>
+      <h1>Favorites Page</h1>
+      <!-- Favorites page content -->
+    </div>
+  </template>
+  
+  <script>
+  export default {
+    name: 'FavoritesPage'
+  }
+  </script>
+  
+  <style>
+  /* Your styles here */
+  </style>
