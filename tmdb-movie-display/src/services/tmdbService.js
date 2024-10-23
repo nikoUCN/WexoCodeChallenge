@@ -28,28 +28,32 @@ export const getHomePicture = async () =>{
 }
 
 // Fetching popular movies from tmdb api, which is displayed on the Homepage
-export const getPopularMovies = async () =>{
-    const results = [];
+export const getPopularMovies = async (page = 1) =>{
     try{
-        for (let page = 1; page <= 20; page++){
-            const response = await axios.get(`${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${page}`);
-            results.push(...response.data.results);
+        const response = await axios.get(`${BASE_URL}/movie/popular?api_key=${API_KEY}&page=${page}`);
+        return response.data.results;
 
-        }
-        return results;
     } catch(error){
         console.error('Error fetching movies:', error)
         throw error;
     }
 }
 
-export const getMoviesAlpabetically = async () => {
+export const getBestVotedMovies = async (page = 1) => {
     try{
-        const response = await axios.get(`${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=vote_count.desc`);
+        const response = await axios.get(`${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=vote_count.desc&page=${page}`);
         return response.data.results;
     } catch(error){
         console.error('Error fetching movies:', error)
         throw error;
     }
-
+}
+export const getMoviesByGenre = async (genreId, page = 1) =>{
+    try{
+        const response = await axios.get(`${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=vote_count.desc&with_genres=${genreId}&page=${page}`);
+        return response.data.results;
+    }
+    catch(error){
+        console.error('Error fetching movies in genre: ', error)
+    }
 }
