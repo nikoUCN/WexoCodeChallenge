@@ -20,7 +20,7 @@
       </div>
     </div>
     <div class="load-more-button-container">
-      <p v-if="displayedMovies.length < popularMovies.length" @click="loadMoreMovies" class="load-more-button">Load More</p>
+      <p v-if="hasMoreMovies" @click="loadMoreMovies" class="load-more-button">Load More</p>
     </div>
   </template>
   
@@ -40,7 +40,9 @@ export default {
        backgroundImageUrl: '',
        popularMovies: [],
        displayedMovies: [], // Array to store the displayed movies
-       moviesPerPage: 9 //Number of movies to be displayed per page
+       moviesPerPage: 9, //Number of movies to be displayed per page
+       currentPage: 1, //Current page number
+       hasMoreMovies: true //Boolean to check if there are more movies
     };
   },
   // Fetched the home picture by awaiting the getHomePicture function
@@ -50,10 +52,8 @@ export default {
       const imagePath = await getHomePicture();
       this.backgroundImageUrl = `https://image.tmdb.org/t/p/original${imagePath}`; // Setting the background image URL
      
-      // Fetching the popular movies
-      const popularMovies = await getPopularMovies(); 
-      this.popularMovies = popularMovies; 
-      this.displayedMovies = popularMovies.slice(0, this.moviesPerPage); // Displaying the first 9 movies
+      // Fetching the first page of popular movies
+      await this.loadMoreMovies();
     }
      catch(error){
        console.error('Error fetching data', error);
@@ -61,10 +61,21 @@ export default {
   },
   methods: {
     // Function to load more movies. Calculates the next set of movies to be displayed and adds them to the displayedMovies array
-    loadMoreMovies() {
-      const currentLength = this.displayedMovies.length;
-      const nextMovies = this.popularMovies.slice(currentLength, currentLength + this.moviesPerPage); 
-      this.displayedMovies = this.displayedMovies.concat(nextMovies); 
+    async loadMoreMovies() {
+      try{
+        const movies = await getPopularMovies(this.currentPage);
+        if(movies.length > 0){
+          this.popularMovies = this.popularMovies.concat(movies); 
+          this.displayedMovies = this.popularMovies.slice(0, this.currentPage * this.moviesPerPage);
+          this.currentPage++; //Incrementing the current pagenumber
+        }
+        else{
+          this.hasMoreMovies = false;
+        }
+      }
+      catch(error){
+        console.error('Error fetching movies', error);
+      }
     },
     // Function to load the movies before displaying them
     addLoadedClass() {
