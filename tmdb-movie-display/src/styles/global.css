@@ -1,0 +1,40 @@
+:root {
+  --navbar-height: 60px; /* Adjust this value to match the actual height of your navbar */
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+  }
+
+  html, body{
+      scroll-behavior: smooth;
+      background-color: rgb(11, 27, 56);
+      height: 100%;
+  }
+
+  #app{
+    height: 100%;
+  }
+
+  /*scrollbar*/
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgb(108, 73, 235);
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: white;
+  }
