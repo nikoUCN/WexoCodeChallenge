@@ -47,11 +47,22 @@ export const getBestVotedMovies = async (page = 1) => {
         console.error('Error fetching movies:', error)
         throw error;
     }
+
 }
 export const getMoviesByGenre = async (genreId, page = 1) =>{
     try{
         const response = await axios.get(`${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=vote_count.desc&with_genres=${genreId}&page=${page}`);
         return response.data.results;
+    }
+    catch(error){
+        console.error('Error fetching movies in genre: ', error)
+    }
+}
+
+export const getMovieDetails = async (movieId) =>{
+    try{
+        const response = await axios.get(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=credits`);
+        return response.data;
     }
     catch(error){
         console.error('Error fetching movies in genre: ', error)
