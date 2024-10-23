@@ -12,9 +12,9 @@
     <div class="movie-container">
       <div class="movie-list">
         <div v-for="movie in displayedMovies" :key="movie.id" class="movie-box">
-          <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Movie Poster" />
+          <router-link :to="`/details/${movie.id}`"><img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Movie Poster" /></router-link>
           <div class="movie-title">
-            {{ movie.title }}
+            <a><router-link :to="`/details/${movie.id}`">{{ movie.title }}</router-link></a>
           </div>
         </div>
       </div>
@@ -76,15 +76,6 @@ export default {
       catch(error){
         console.error('Error fetching movies', error);
       }
-    },
-    // Function to load the movies before displaying them
-    addLoadedClass() {
-      const movieBoxes = this.$el.querySelectorAll('.movie-box');
-      movieBoxes.array.forEach((box, index) => {
-        setTimeout(() => {
-          box.classList.add('loaded');
-        }, index * 100);
-      });
     }
   }
 };
@@ -175,12 +166,11 @@ export default {
 
   .movie-box{
     width: calc(33.33% - 20px);
-    transform: translateY(20px);
     transition: transform 0.5s ease;
   }
 
-  .movie-box.loaded{
-    transform: translateY(0);
+  .movie-box:hover{
+    transform: scale(1.02);
   }
 
   .movie-box img{
@@ -190,12 +180,13 @@ export default {
   }
 
   /*Styling of the movie title*/
-  .movie-title{
+  .movie-title a{
       display: flex;
       justify-content: flex-start;
       font-size: 20px;
       font-weight: bold;
       color: white;
+      text-decoration: none;
       margin: 10px 0;
       cursor: pointer;
   }
