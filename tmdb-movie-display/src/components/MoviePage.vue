@@ -3,7 +3,10 @@
     <NavBar />
     <div class="genre-container">
       <div class="genre-list">
-        <div v-for="genre in filteredGenres" :key="genre.id" class="genre-box"> <!-- Looping through the genre array by id-->
+        <div v-for="genre in filteredGenres" 
+        :key="genre.id" 
+        :class="['genre-box', {active: genre.id === selectedGenre}]"  
+        @click="selectGenre(genre.id)"> <!-- Looping through the genre array by id-->
           {{ genre.name }} <!-- displaying the genre name -->
         </div>
       </div>
@@ -20,13 +23,13 @@
     </div>
   </div>
   <div class="load-more-button-container">
-      <p v-if="displayedMovies.length < movies.length" @click="loadMoreMovies" class="load-more-button">Load More</p>
+      <p v-if="hasMoreMovies" @click="loadMoreMovies" class="load-more-button">Load More</p>
   </div>
   </template>
   
   <script>
   //importing functions from tmdbService
-  import { getGenres, getMoviesAlpabetically } from '@/services/tmdbService'; 
+  import { getGenres, getBestVotedMovies, getMoviesByGenre } from '@/services/tmdbService'; 
   import NavBar from './NavBar.vue';
 
   export default {
@@ -40,7 +43,10 @@
         filteredGenres: [],
         movies: [],
         displayedMovies: [], 
-        moviesPerPage: 9
+        moviesPerPage: 9,
+        currentPage: 1,
+        hasMoreMovies: true,
+        selectedGenre: null //Storing the selected genres
       };
     },
     async created(){
@@ -56,10 +62,8 @@
       }
 
       try{
-        // Fetching the movies
-        const movies = await getMoviesAlpabetically(); 
-        this.movies = movies; // Setting the movies
-        this.displayedMovies = movies.slice(0, this.moviesPerPage);
+        //Fetching the first page of best voted movies
+        await this.loadMoreMovies();
       }
       catch(error){
         console.error('Error fetching data', error);
@@ -67,10 +71,37 @@
     },
   methods: {
     // Function to load more movies. Calculates the next set of movies to be displayed and adds them to the displayedMovies array
-    loadMoreMovies() {
-      const currentLength = this.displayedMovies.length;
-      const nextMovies = this.movies.slice(currentLength, currentLength + this.moviesPerPage); 
-      this.displayedMovies = this.displayedMovies.concat(nextMovies); 
+    async loadMoreMovies() {
+      try{
+        let movies;
+        if(this.selectedGenre){
+          movies = await getMoviesByGenre(this.selectedGenre, this.currentPage);
+        }
+        else{
+          movies = await getBestVotedMovies(this.currentPage);
+        }
+        if(movies.length > 0){
+          this.movies = this.movies.concat(movies);
+          this.displayedMovies = this.movies.slice(0, this.currentPage * this.moviesPerPage);
+          this.currentPage++; //Incrementing the current pagenumber
+        }
+        else{
+          this.hasMoreMovies = false;
+        }
+      }
+      catch(error){
+        console.error('Error fetching movies', error);
+      }
+        
+    },
+    // Function to select the genre
+    async selectGenre(genreId) {
+      this.selectedGenre = genreId;
+      this.currentPage = 1;
+      this.movies = [];
+      this.displayedMovies = [];
+      this.hasMoreMovies = true
+      await this.loadMoreMovies();
     },
     // Function to load the movies before displaying them
     addLoadedClass() {
@@ -115,6 +146,10 @@
 
   .genre-box:hover{
       background-color: rgb(108, 73, 235);
+  }
+
+  .genre-box.active{
+    background-color: rgb(108, 73, 235);
   }
 
   /*Styling of the movie poster*/
