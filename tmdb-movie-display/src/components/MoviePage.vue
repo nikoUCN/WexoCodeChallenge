@@ -170,7 +170,7 @@
   /*Styling of the movie poster*/
   .movie-container{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .movie-list{
@@ -229,4 +229,30 @@
     background-color: rgb(108, 73, 235);
     transform: scale(1.1);
   }
+
+  @media only screen and (max-width: 850px){
+
+  .genre-container{
+    width: 850px;
+    padding: 10px;
+    padding-top: calc(var(--navbar-height) + 40px);
+    padding-bottom: 40px;
+  }
+
+.movie-container{
+  display: flex;
+  justify-content: center;
+  width: 850px;
+}
+
+.movie-list{
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.load-more-button-container{
+  display: flex;
+  justify-content: center;
+  width: 850px
+}
+}
   </style>
