@@ -158,14 +158,6 @@ nav ul li .fa-icon.active{
 
 @media  (max-width: 850px) {
 
-    .nav-bar{
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-    }
-
     .search-bar{
         display: flex;
         justify-content: flex-start;
