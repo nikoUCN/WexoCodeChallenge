@@ -5,9 +5,9 @@
   <div class="favorite-movie-container">
     <div v-if="favoriteMovies.length" class="favorite-movie-list">
       <div v-for="movie in favoriteMovies" :key="movie.id" class="favorite-movie-box">
-        <img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Movie poster" />
+        <router-link :to="`/details/${movie.id}`"><img :src="`https://image.tmdb.org/t/p/w500${movie.poster_path}`" alt="Movie poster" /></router-link>
         <div class="movie-title">
-          <a>{{ movie.title }}</a>
+          <a><router-link :to="`/details/${movie.id}`">{{ movie.title }}</router-link></a>
         </div>
       </div>
     </div>
