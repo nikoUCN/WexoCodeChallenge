@@ -1,5 +1,5 @@
 <template>
-  <div :style="{backgroundImage: `url(${backgroundImageUrl})`}" class="header-image"></div> <!-- Setting the background image URL -->
+    <div :style="{backgroundImage: `url(${backgroundImageUrl})`}" class="header-image"></div> <!-- Setting the background image URL -->
     <div class="header-container">
         <div class="header-text">
             <h1><span>WEXO</span> Movies</h1>
@@ -85,7 +85,6 @@ export default {
 
 
 <style scoped>
-
 /*Styling of the header image*/
 .header-image{
   position: absolute;
@@ -152,12 +151,12 @@ export default {
   /*Styling of the movie poster*/
   .movie-container{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
   }
 
   .movie-list{
     display: grid;
-    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
       padding: 20px;
       gap: 20px;
   }
@@ -210,5 +209,45 @@ export default {
   .load-more-button:hover{
     background-color: rgb(108, 73, 235);
     transform: scale(1.1);
+  }
+
+  @media only screen and (max-width: 850px){
+
+    .header-image {
+    width: 850px;
+    overflow-x: hidden;
+    }
+
+    .header-text span{
+      font-size: 50px;
+    }
+
+    .header-text h1{
+      font-size: 35px;
+    }
+
+    .header-text p{
+      font-size: 15px;
+    }
+
+    .popular-header-container h2{
+      font-size: 40px;
+      padding: 20px 0;
+    }
+    .movie-container{
+      display: flex;
+      justify-content: center;
+      width: 850px;
+    }
+
+    .movie-list{
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .load-more-button-container{
+      display: flex;
+      justify-content: center;
+      width: 850px
+    }
   }
 </style>
