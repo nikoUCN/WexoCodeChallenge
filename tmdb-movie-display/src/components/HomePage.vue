@@ -156,16 +156,13 @@ export default {
   }
 
   .movie-list{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
       padding: 20px;
       gap: 20px;
   }
 
   .movie-box{
-    width: calc(33.33% - 20px);
     transition: transform 0.5s ease;
   }
 
@@ -175,6 +172,7 @@ export default {
 
   .movie-box img{
     width: 100%;
+    height: auto;
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
     cursor: pointer;
   }

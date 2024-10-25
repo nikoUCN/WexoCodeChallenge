@@ -151,16 +151,13 @@
   }
 
   .movie-list{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
+    display: grid;
+      grid-template-columns: repeat(3, 1fr);
       padding: 20px;
       gap: 20px;
   }
 
   .movie-box{
-    width: calc(33.33% - 20px);
     transition: transform 0.5s ease;
   }
 
