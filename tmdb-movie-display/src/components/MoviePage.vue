@@ -11,6 +11,9 @@
         </div>
       </div>
     </div>
+    <div class="movie-count" v-if="selectedGenre">
+        <p>{{ totalMovies }} movies in {{ selectedGenreName }}</p>
+      </div>
     <div class="movie-container">
       <div class="movie-list">
         <div v-for="movie in displayedMovies" :key="movie.id" class="movie-box">
@@ -46,7 +49,9 @@
         moviesPerPage: 9,
         currentPage: 1,
         hasMoreMovies: true,
-        selectedGenre: null //Storing the selected genres
+        selectedGenre: null, //Storing the selected genres
+        selectedGenreName: '',
+        totalMovies: 0
       };
     },
     async created(){
@@ -75,7 +80,10 @@
       try{
         let movies;
         if(this.selectedGenre){
-          movies = await getMoviesByGenre(this.selectedGenre, this.currentPage);
+          const response = await getMoviesByGenre(this.selectedGenre, this.currentPage);
+          movies = response.results;
+          this.totalMovies = response.totalResults;
+          console.log('total results:', response.totalResults);
         }
         else{
           movies = await getBestVotedMovies(this.currentPage);
@@ -97,6 +105,7 @@
     // Function to select the genre
     async selectGenre(genreId) {
       this.selectedGenre = genreId;
+      this.selectedGenreName = this.genres.find(genre => genre.id === genreId).name;
       this.currentPage = 1;
       this.movies = [];
       this.displayedMovies = [];
@@ -144,6 +153,20 @@
     background-color: rgb(108, 73, 235);
   }
 
+  /*Styling of the movie count*/
+  .movie-count{
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 20px;
+  }
+
+  .movie-count p{
+    font-size: 13px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0;
+  }
+
   /*Styling of the movie poster*/
   .movie-container{
     display: flex;
@@ -167,7 +190,7 @@
 
   .movie-box img{
     width: 100%;
-    height: 90vh;
+    height: auto;
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
     cursor: pointer;
   }
