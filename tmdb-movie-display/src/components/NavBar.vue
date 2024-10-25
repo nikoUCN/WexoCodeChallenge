@@ -13,11 +13,11 @@
                 </div>
                 <div class="nav-links">
                     <!-- routing to the home, movie and favorites page using my routing/index.js-->
-                    <li><router-link to="/">Home</router-link></li>
-                    <li><router-link to="/movies">Movies</router-link></li>
+                    <li :class="{active: isActiveHome}"><router-link to="/home">Home</router-link></li>
+                    <li :class="{active: isActiveMovies}"><router-link to="/movies">Movies</router-link></li>
                     <li @mouseover="isHovered = true" @mouseleave="isHovered = false">
                      <router-link to="/favorites">
-                        <font-awesome-icon class="fa-icon" :icon="isHovered ? ['fas', 'bookmark'] : ['far', 'bookmark']" />
+                        <font-awesome-icon class="fa-icon" :class="{active: isActiveFavorite}" :icon="isHovered || isActiveFavorite ? ['fas', 'bookmark'] : ['far', 'bookmark']" />
                      </router-link>
                 </li>
                 </div>
@@ -35,8 +35,23 @@
     name: 'NavBar',
     data(){
       return{
-        isHovered: false
+        isHovered: false,
+        isActiveHome: false,
+        isActiveMovies: false,
+        isActiveFavorite: false
       };
+    },
+    watch:{
+        $route(to){
+            this.isActiveHome = to.path === '/home';
+            this.isActiveMovies = to.path === '/movies';
+            this.isActiveFavorite = to.path === '/favorites';
+        }
+    },
+    created(){
+        this.isActiveHome = this.$route.path === '/home';
+        this.isActiveMovies = this.$route.path === '/movies';
+        this.isActiveFavorite = this.$route.path === '/favorites';
     }
   }
   </script>
@@ -118,6 +133,10 @@ nav ul li a:hover{
     color: rgb(108, 73, 235);
 }
 
+nav ul li.active a{
+    color: rgb(108, 73, 235);
+}
+
 nav ul li .fa-icon{
     font-size: 20px;
     color: white;
@@ -125,6 +144,10 @@ nav ul li .fa-icon{
 }
 
 nav ul li .fa-icon:hover{
+    color: rgb(108, 73, 235);
+}
+
+nav ul li .fa-icon.active{
     color: rgb(108, 73, 235);
 }
 
