@@ -22,9 +22,14 @@
           </div>
           <div class="movie-rating">
             <p>Vote average: {{ movie.vote_average }}</p>
+          </div>
+          <div class="favorite-icon">
+            <div @click="toggleFavorite" @mouseover="isHovered = true" @mouseleave="isHovered = false">
+              <font-awesome-icon class= "fa-icon" :class="{active: isFavorite}" :icon="isHovered || isFavorite ? ['fas', 'bookmark'] : ['far', 'bookmark']" />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+     </div>
   </template>
   
   <script>
@@ -40,35 +45,60 @@
       return{
         movie: null, // Object to store the movie 
         movieGenres: '',
-        movieActors: '' // String to store the movie actors
+        movieActors: '', // String to store the movie actors
+        isHovered: false,
+        isFavorite: false
       };
     },
     async created(){
-      const movieId = this.$route.params.id; // Getting the movie id from the route
       try{
         // Fetching the movie details
+        const movieId = this.$route.params.id; // Getting the movie id from the route
         const movie = await getMovieDetails(movieId); 
         this.movie = movie; 
         this.movieGenres = movie.genres.map(genre => genre.name).join(', ');
         this.movieActors = movie.credits.cast.slice(0, 3).map(actor => actor.name).join(', '); // Joining the actors
+        this.isFavorite = this.checkIfFavorite(movie.id);
+        console.log(`Movie ID: ${movie.id}, isFavorite: ${this.isFavorite}`);
       }
       catch(error){
         console.error('Error fetching data', error);
       }
     },
-    beforeRouteLeave(to, from, next){
-      this.$store.commit('saveScrollPosition', window.scrollY);
-      next();
-    },
-    beforeRouteEnter(to, from, next){
-      next(vm => {
-        const scrollPosition = vm.$store.state.scrollPosition;
-        if(scrollPosition !== null){
-          window.scrollTo(0, scrollPosition);
+    methods: {
+      // Method to toggle favorite status
+      toggleFavorite(){
+        const movieId = this.movie.id;
+        const movie = {
+          id: movieId,
+          title: this.movie.original_title,
+          poster_path: this.movie.poster_path
+        };
+
+        let favorites = JSON.parse(sessionStorage.getItem('favorites')) || [];
+
+        // If the movie is a favorite, remove it from the favorites
+        if(this.isFavorite){
+          favorites = favorites.filter(fav => fav.id !== movieId);
         }
-      });
-    }
+        else{
+          if(!favorites.some(fav => fav.id === movieId)){
+            favorites.push(movie);
+          }
+        }
+
+        // Storing the favorite movies in the session storage
+        sessionStorage.setItem('favorites', JSON.stringify(favorites));
+        this.isFavorite = this.checkIfFavorite(movieId);
+        console.log(`Toggled isFavorite to: ${this.isFavorite}`);
+      },
+      // Method to check if the movie is a favorite
+      checkIfFavorite(movieId){
+        const favorites = JSON.parse(sessionStorage.getItem('favorites')) || [];
+        return favorites.some(fav => fav.id === movieId);
+      }
   }
+}
   </script>
   
   <style>
@@ -168,5 +198,28 @@
       font-size: 13px;
       color: rgba(255, 255, 255, 0.4);
   }
+
+  /*Styling of the favorite icon*/
+  .favorite-icon{
+      display: flex;
+      justify-content: flex-start;
+      padding-top: 20px;
+  }
+
+  .favorite-icon .fa-icon{
+      font-size: 20px;
+      color: white;
+      cursor: pointer;
+      transition: color 0.5s ease;
+  }
+
+  .favorite-icon .fa-icon:hover{
+      color: rgb(108, 73, 235);
+  }
+
+  .favorite-icon .fa-icon.active{
+      color: rgb(108, 73, 235);
+  }
+
 
   </style>
