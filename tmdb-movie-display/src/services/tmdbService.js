@@ -52,7 +52,10 @@ export const getBestVotedMovies = async (page = 1) => {
 export const getMoviesByGenre = async (genreId, page = 1) =>{
     try{
         const response = await axios.get(`${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=vote_count.desc&with_genres=${genreId}&page=${page}`);
-        return response.data.results;
+        return {
+            results: response.data.results,
+            totalResults: response.data.total_results
+        };
     }
     catch(error){
         console.error('Error fetching movies in genre: ', error)
