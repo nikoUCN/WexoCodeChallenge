@@ -155,4 +155,56 @@ nav ul li .fa-icon.active{
     height: 110px;
 }
 
+
+@media  (max-width: 850px) {
+
+    .search-bar{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .search-bar input{
+        width: 100%;
+    }
+
+    .nav-links{
+        display: flex;
+        flex-direction: row;
+        padding: 30px;
+        gap: 30px;
+    }
+
+    nav ul li.logo{
+        margin-left: 20px;
+    }
+    
+    nav ul li a{
+        margin: 0;
+    }
+
+    nav ul li{
+        margin: 0;
+    }
+
+    nav ul{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    nav ul li .fa-icon{
+        display: block;
+        margin: 0;
+    }
+
+    nav ul li .fa-icon.active{
+        display: block;
+    }
+
+    .logo-img{
+        height: 80px;
+    }
+    
+}
+
   </style>
