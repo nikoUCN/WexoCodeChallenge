@@ -59,7 +59,7 @@
         // Fetching the genres
         const genres = await getGenres(); 
         this.genres = genres; // Setting the genres
-        const indexes = [0, 1, 2, 3, 5, 6, 7, 8, 10, 13, 14, 16]; // Indexes of the genres to be displayed
+        const indexes = [0, 2, 3, 4, 5, 6, 10, 13, 16, 17]; // Indexes of the genres to be displayed
         this.filteredGenres = indexes.map(index => genres[index]); // Filtering the genres to be displayed
       }
       catch(error){
@@ -121,8 +121,8 @@
   .genre-container{
     display: flex;
     justify-content: center;
-    padding-top: calc(var(--navbar-height) + 20px);
-    padding-bottom: 20px;
+    padding-top: calc(var(--navbar-height) + 40px);
+    padding-bottom: 40px;
   }
 
   .genre-list{
@@ -130,7 +130,7 @@
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
-      gap: 40px;
+      gap: 20px;
   }
 
   .genre-box{
