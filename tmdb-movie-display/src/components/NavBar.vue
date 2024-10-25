@@ -158,6 +158,14 @@ nav ul li .fa-icon.active{
 
 @media  (max-width: 850px) {
 
+    .nav-bar{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+
     .search-bar{
         display: flex;
         justify-content: flex-start;
@@ -169,14 +177,12 @@ nav ul li .fa-icon.active{
     }
 
     .nav-links{
-        display: flex;
-        flex-direction: row;
-        padding: 30px;
+        padding: 40px;
         gap: 30px;
     }
 
     nav ul li.logo{
-        margin-left: 20px;
+        margin-left: 30px;
     }
     
     nav ul li a{
@@ -190,6 +196,7 @@ nav ul li .fa-icon.active{
     nav ul{
         display: flex;
         justify-content: space-between;
+        margin: 0;
     }
 
     nav ul li .fa-icon{
