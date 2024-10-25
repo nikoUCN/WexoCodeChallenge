@@ -8,6 +8,7 @@ import SearchPage from '../components/SearchPage.vue';
 //defining routes 
 const routes = [
     { path: '/', component: HomePage },
+    { path: '/home', component: HomePage },
     { path: '/movies', component: MoviePage },
     { path: '/favorites', component: FavoritesPage },
     { path: '/details/:id', component: DetailsPage},
