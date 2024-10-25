@@ -15,7 +15,10 @@
             <p>Genres: {{ movieGenres }}</p>
           </div>
           <div class="movie-release-date">
-            <p>Release date: {{ movie.release_date }}</p>
+            <p>Release Date: {{ movie.release_date }}</p>
+          </div>
+          <div class="movie-directors">
+            <p>Directors: {{ movieDirectors }}</p>
           </div>
           <div class="movie-actors">
             <p>Actors: {{ movieActors }}</p>
@@ -45,7 +48,8 @@
       return{
         movie: null, // Object to store the movie 
         movieGenres: '',
-        movieActors: '', // String to store the movie actors
+        movieDirectors: '',
+        movieActors: '',
         isHovered: false,
         isFavorite: false
       };
@@ -57,6 +61,7 @@
         const movie = await getMovieDetails(movieId); 
         this.movie = movie; 
         this.movieGenres = movie.genres.map(genre => genre.name).join(', ');
+        this.movieDirectors = movie.credits.crew.filter(crew => crew.job === 'Director').map(director => director.name).join(', ');
         this.movieActors = movie.credits.cast.slice(0, 3).map(actor => actor.name).join(', '); // Joining the actors
         this.isFavorite = this.checkIfFavorite(movie.id);
         console.log(`Movie ID: ${movie.id}, isFavorite: ${this.isFavorite}`);
@@ -171,6 +176,18 @@
   }
 
   .movie-release-date p{
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.4);
+  }
+
+  /*Styling of the movie directors*/
+  .movie-directors{
+      display: flex;
+      justify-content: flex-start;
+      padding-top: 20px;
+  }
+
+  .movie-directors p{
       font-size: 13px;
       color: rgba(255, 255, 255, 0.4);
   }
