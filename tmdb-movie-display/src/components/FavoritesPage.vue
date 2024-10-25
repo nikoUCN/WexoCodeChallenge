@@ -52,7 +52,7 @@
 
   .favorite-movie-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
   }
   
 
@@ -100,4 +100,23 @@
     font-size: 20px;
     color: white;
   }
+
+  @media only screen and (max-width: 850px){
+
+.favorite-movie-container{
+display: flex;
+justify-content: center;
+width: 850px;
+}
+
+.favorite-movie-list{
+grid-template-columns: repeat(2, 1fr);
+}
+
+.load-more-button-container{
+display: flex;
+justify-content: center;
+width: 850px
+}
+}
   </style>
