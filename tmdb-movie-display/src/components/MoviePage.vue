@@ -194,6 +194,7 @@
     height: auto;
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
     cursor: pointer;
+    height: 90%;
   }
 
   /*Styling of the movie title*/
