@@ -71,3 +71,16 @@ export const getMovieDetails = async (movieId) =>{
         console.error('Error fetching movies in genre: ', error)
     }
 }
+
+export const searchMovies = async (query, page = 1) => {
+    try{
+        const response = await axios.get(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&page=${page}&include_adult=false`);
+    return {
+        results: response.data.results,
+        total_pages: response.data.total_pages
+    };
+    }
+    catch(error){
+        console.error('Error fetching movies in search: ', error)
+    }
+}
