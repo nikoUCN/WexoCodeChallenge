@@ -46,7 +46,7 @@
         filteredGenres: [],
         movies: [],
         displayedMovies: [], 
-        moviesPerPage: 9,
+        moviesPerPage: 12,
         currentPage: 1,
         hasMoreMovies: true,
         selectedGenre: null, //Storing the selected genres
@@ -175,9 +175,10 @@
 
   .movie-list{
     display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       padding: 20px;
       gap: 20px;
+      width: 100%;
   }
 
   .movie-box{
@@ -246,7 +247,7 @@
 }
 
 .movie-list{
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .load-more-button-container{
