@@ -34,7 +34,7 @@
       };
     },
     async created(){
-      // Fetching the favorite movies from local storage
+      // Fetching the favorite movies from session storage
       const favoriteMovies = JSON.parse(sessionStorage.getItem('favorites')) || [];
       this.favoriteMovies = favoriteMovies; // Setting the favorite movies
     }
@@ -64,9 +64,10 @@
 
   .favorite-movie-list {
       display: grid;
-      grid-template-columns: repeat(3, minmax(200px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       padding: 20px;
       gap: 20px;
+      width: 100%;
   }
 
   .favorite-movie-box{
@@ -99,7 +100,7 @@
     display: flex;
     justify-content: center;
     padding-top: 150px;
-    height: 100vh;
+    width: 100%;
   }
 
   .no-movies-text p{
@@ -116,7 +117,7 @@ width: 850px;
 }
 
 .favorite-movie-list{
-grid-template-columns: repeat(2, 1fr);
+grid-template-columns: repeat(3, 1fr);
 }
 
 .load-more-button-container{

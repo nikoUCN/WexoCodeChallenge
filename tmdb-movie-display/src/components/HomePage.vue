@@ -40,7 +40,7 @@ export default {
        backgroundImageUrl: '',
        popularMovies: [],
        displayedMovies: [], // Array to store the displayed movies
-       moviesPerPage: 9, //Number of movies to be displayed per page
+       moviesPerPage: 12, //Number of movies to be displayed per page
        currentPage: 1, //Current page number
        hasMoreMovies: true //Boolean to check if there are more movies
     };
@@ -156,9 +156,10 @@ export default {
 
   .movie-list{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
       padding: 20px;
       gap: 20px;
+      width: 100%;
   }
 
   .movie-box{
@@ -241,7 +242,7 @@ export default {
     }
 
     .movie-list{
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(3, 1fr);
     }
 
     .load-more-button-container{
