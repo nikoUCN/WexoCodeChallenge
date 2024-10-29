@@ -1,8 +1,8 @@
 <template>
-    <div>
-      <h1>Favorites Page</h1>
-      <!-- Favorites page content -->
-    </div>
+  <div class="search-bar">
+    <input type="text" placeholder="Search for movies" />
+    <font-awesome-icon class="fa-icon" :icon="['fas', 'magnifying-glass']" />
+  </div>
 </template>
   
 <script>

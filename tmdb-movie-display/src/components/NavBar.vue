@@ -7,10 +7,6 @@
                         <img src="@/assets/wexologo.svg" class="logo-img" />
                     </router-link>
                 </li>
-                <div class="search-bar">
-                    <input type="text" placeholder="Search for movies" />
-                    <font-awesome-icon class="fa-icon" :icon="['fas', 'magnifying-glass']" />
-                </div>
                 <div class="nav-links">
                     <!-- routing to the home, movie and favorites page using my routing/index.js-->
                     <li :class="{active: isActiveHome}"><router-link to="/home">Home</router-link></li>
@@ -19,7 +15,12 @@
                      <router-link to="/favorites">
                         <font-awesome-icon class="fa-icon" :class="{active: isActiveFavorite}" :icon="isHovered || isActiveFavorite ? ['fas', 'bookmark'] : ['far', 'bookmark']" />
                      </router-link>
-                </li>
+                    </li>
+                    <li class="search-icon" :class="{active: isActiveSearch}">
+                     <router-link to="/search">
+                        <font-awesome-icon class="fa-icon" :icon="['fas', 'magnifying-glass']" />
+                     </router-link>
+                    </li>
                 </div>
             </ul>
         </nav>
@@ -38,7 +39,8 @@
         isHovered: false,
         isActiveHome: false,
         isActiveMovies: false,
-        isActiveFavorite: false
+        isActiveFavorite: false,
+        isActiveSearch: false
       };
     },
     watch:{
@@ -46,12 +48,14 @@
             this.isActiveHome = to.path === '/home';
             this.isActiveMovies = to.path === '/movies';
             this.isActiveFavorite = to.path === '/favorites';
+            this.isActiveSearch = to.path === '/search';
         }
     },
     created(){
         this.isActiveHome = this.$route.path === '/home';
         this.isActiveMovies = this.$route.path === '/movies';
         this.isActiveFavorite = this.$route.path === '/favorites';
+        this.isActiveSearch = this.$route.path === '/search';
     }
   }
   </script>
@@ -74,28 +78,6 @@ nav{
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.5);
 }
 
-/*Styling of the navigation bar search*/
-.search-bar{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.search-bar input{
-    padding: 10px;
-    border-radius: 30px;
-    border: none;
-    margin: 20px;
-    width: 300px;
-    font-size: 15px;
-}
-
-.search-bar .fa-icon{
-    font-size: 20px;
-    color: white;
-    margin: 30px 0;
-    cursor: pointer;
-}
 
 /*Styling of the navigation bar titles*/
 nav ul {
@@ -158,23 +140,13 @@ nav ul li .fa-icon.active{
 
 @media  (max-width: 850px) {
 
-    .search-bar{
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
-
-    .search-bar input{
-        width: 100%;
-    }
-
     .nav-links{
-        padding: 40px;
+        padding: 40px 20px;
         gap: 30px;
     }
 
     nav ul li.logo{
-        margin-left: 30px;
+        margin-left: 20px;
     }
     
     nav ul li a{
@@ -203,7 +175,6 @@ nav ul li .fa-icon.active{
     .logo-img{
         height: 80px;
     }
-    
 }
 
   </style>
