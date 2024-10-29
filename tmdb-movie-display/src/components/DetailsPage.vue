@@ -161,6 +161,7 @@
       display: flex;
       justify-content: flex-start;
       padding-top: 20px;
+      text-align: left;
   }
 
   .movie-genres p{
@@ -173,6 +174,7 @@
       display: flex;
       justify-content: flex-start;
       padding-top: 20px;
+      text-align: left;
   }
 
   .movie-release-date p{
@@ -185,6 +187,7 @@
       display: flex;
       justify-content: flex-start;
       padding-top: 20px;
+      text-align: left;
   }
 
   .movie-directors p{
@@ -197,6 +200,7 @@
       display: flex;
       justify-content: flex-start;
       padding-top: 20px;
+      text-align: left;
   }
 
   .movie-actors p{
@@ -209,6 +213,7 @@
       display: flex;
       justify-content: flex-start;
       padding-top: 20px;
+      text-align: left;
   }
 
   .movie-rating p{
@@ -238,5 +243,43 @@
       color: rgb(108, 73, 235);
   }
 
+  @media only screen and (max-width: 850px){
 
+    .movie-details-container{
+      display: grid;
+      grid-template-rows: auto 1fr;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .movie-image{
+      grid-row: 1;
+      width: 100%;
+      padding-top: 40px; 
+    }
+
+    .movie-image img{
+      position: relative;
+      width: 100%;
+      height: auto;
+      box-shadow: none;
+    }
+
+    .movie-details {
+    grid-row: 2;
+    width: 100%;
+    padding: 0 20px 30px;
+  }
+
+  .movie-title h1 {
+    font-size: 30px;
+    padding-top: 30px;
+  }
+
+  .movie-overview p {
+    font-size: 13px;
+  }
+
+}
   </style>
