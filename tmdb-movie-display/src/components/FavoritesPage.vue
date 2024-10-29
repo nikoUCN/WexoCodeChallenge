@@ -1,4 +1,5 @@
 <template>
+  <NavBar />
   <div class="favorite-header-container">
     <h1>Favorites</h1>
   </div>
@@ -20,8 +21,13 @@
 
 
   <script>
+  import NavBar from './NavBar.vue';
+
   export default {
     name: 'FavoritesPage',
+    components: {
+      NavBar
+    },
     data(){
       return{
         favoriteMovies: [] // Array to store the favorite movies
