@@ -1,9 +1,12 @@
+<!-- Always displaying the Navbar -->
 <template>
   <div>
     <NavBar />
     <router-view />
   </div>
 </template>
+
+
 
 <script>
 import NavBar from './components/NavBar.vue';
@@ -17,14 +20,3 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  height: 100%;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #0b1b38;
-  margin-top: 60px;
-}
-</style>

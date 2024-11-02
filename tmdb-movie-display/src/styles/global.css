@@ -1,5 +1,7 @@
+/*Global css applied to all components - scrollbar etc*/
+
 :root {
-  --navbar-height: 60px; /* Adjust this value to match the actual height of your navbar */
+  --navbar-height: 60px;
 }
 
 *{
@@ -16,8 +18,14 @@
       height: 100%;
   }
 
-  #app{
+  #app {
     height: 100%;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #0b1b38;
+    margin-top: 60px;
   }
 
   /*scrollbar*/
