@@ -1,3 +1,4 @@
+<!-- HTML code to display genres and a list of best voted movies -->
 <template>
   <div>
     <NavBar />
@@ -6,7 +7,7 @@
         <div v-for="genre in filteredGenres" 
         :key="genre.id" 
         :class="['genre-box', {active: genre.id === selectedGenre}]"  
-        @click="selectGenre(genre.id)"> <!-- Looping through the genre array by id-->
+        @click="selectGenre(genre.id)"> 
           {{ genre.name }} <!-- displaying the genre name -->
         </div>
       </div>
@@ -30,6 +31,8 @@
   </div>
   </template>
   
+
+
   <script>
   //importing functions from tmdbService
   import { getGenres, getBestVotedMovies, getMoviesByGenre } from '@/services/tmdbService'; 
@@ -40,6 +43,7 @@
     components: {
       NavBar
     },
+
     data(){
       return{
         genres: [],
@@ -50,10 +54,11 @@
         currentPage: 1,
         hasMoreMovies: true,
         selectedGenre: null, //Storing the selected genres
-        selectedGenreName: '',
+        selectedGenreName: '', //Storing the selected genre name
         totalMovies: 0
       };
     },
+
     async created(){
       try{
         // Fetching the genres
@@ -63,7 +68,7 @@
         this.filteredGenres = indexes.map(index => genres[index]); // Filtering the genres to be displayed
       }
       catch(error){
-        console.error('Error fetching data', error);
+        console.error('Error fetching genres', error);
       }
 
       try{
@@ -71,13 +76,15 @@
         await this.loadMoreMovies();
       }
       catch(error){
-        console.error('Error fetching data', error);
+        console.error('Error fetching more movies', error);
       }
     },
+
   methods: {
     // Function to load more movies. Calculates the next set of movies to be displayed and adds them to the displayedMovies array
     async loadMoreMovies() {
       try{
+        // Fetching the movies based on the selected genre
         let movies;
         if(this.selectedGenre){
           const response = await getMoviesByGenre(this.selectedGenre, this.currentPage);
@@ -85,9 +92,13 @@
           this.totalMovies = response.totalResults;
           console.log('total results:', response.totalResults);
         }
+
+        // Fetching the best voted movies if no genre is selected
         else{
           movies = await getBestVotedMovies(this.currentPage);
         }
+
+        // Adding the fetched movies to the movies array
         if(movies.length > 0){
           this.movies = this.movies.concat(movies);
           this.displayedMovies = this.movies.slice(0, this.currentPage * this.moviesPerPage);
@@ -102,20 +113,24 @@
       }
         
     },
+
     // Function to select the genre
     async selectGenre(genreId) {
       this.selectedGenre = genreId;
       this.selectedGenreName = this.genres.find(genre => genre.id === genreId).name;
-      this.currentPage = 1;
-      this.movies = [];
-      this.displayedMovies = [];
-      this.hasMoreMovies = true
+      // Resetting the movies array, current page number, displayed movies array and hasMoreMovies boolean
+      this.currentPage = 1; 
+      this.movies = []; 
+      this.displayedMovies = []; 
+      this.hasMoreMovies = true 
       await this.loadMoreMovies();
     }
   }
 };
   </script>
   
+
+
   <style scoped>
   /*Styling of the genre list*/
   .genre-container{
@@ -232,6 +247,7 @@
     transform: scale(1.1);
   }
 
+  /*Styling for mobile devices*/
   @media only screen and (max-width: 850px){
 
   .genre-container{
@@ -241,20 +257,20 @@
     padding-bottom: 40px;
   }
 
-.movie-container{
-  display: flex;
-  justify-content: center;
-  width: 850px;
-}
+  .movie-container{
+    display: flex;
+    justify-content: center;
+    width: 850px;
+  }
 
-.movie-list{
-  grid-template-columns: repeat(3, 1fr);
-}
+  .movie-list{
+    grid-template-columns: repeat(3, 1fr);
+  }
 
-.load-more-button-container{
-  display: flex;
-  justify-content: center;
-  width: 850px
-}
-}
+  .load-more-button-container{
+    display: flex;
+    justify-content: center;
+    width: 850px
+  }
+  }
   </style>

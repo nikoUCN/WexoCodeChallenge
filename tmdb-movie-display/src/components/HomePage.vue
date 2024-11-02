@@ -1,4 +1,6 @@
+<!-- HTML code to display a background image and the popular movies -->
 <template>
+  <NavBar />
     <div :style="{backgroundImage: `url(${backgroundImageUrl})`}" class="header-image"></div> <!-- Setting the background image URL -->
     <div class="header-container">
         <div class="header-text">
@@ -26,15 +28,17 @@
   
 
 
-
 <script>
 //importing functions from tmdbService
 import { getHomePicture, getPopularMovies } from '@/services/tmdbService'; 
+import NavBar from './NavBar.vue';
 
-// Exporting the HomePage component
 export default {
   name: 'HomePage',
-  // Data property to store the background image URL
+  components: {
+      NavBar
+    },
+
   data(){
     return{
        backgroundImageUrl: '',
@@ -45,7 +49,7 @@ export default {
        hasMoreMovies: true //Boolean to check if there are more movies
     };
   },
-  // Fetched the home picture by awaiting the getHomePicture function
+
    async created(){
     try{
       // Fetching the home picture
@@ -59,6 +63,7 @@ export default {
        console.error('Error fetching data', error);
     }
   },
+
   methods: {
     // Function to load more movies. Calculates the next set of movies to be displayed and adds them to the displayedMovies array
     async loadMoreMovies() {
@@ -81,7 +86,6 @@ export default {
 };
 </script>
   
-
 
 
 <style scoped>
@@ -213,6 +217,7 @@ export default {
     transform: scale(1.1);
   }
 
+   /*Styling for mobile devices*/
   @media only screen and (max-width: 850px){
 
     .header-image {

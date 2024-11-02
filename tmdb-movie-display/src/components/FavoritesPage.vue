@@ -1,3 +1,4 @@
+<!-- HTML code to display favorite mvies when they are favorited on the details page -->
 <template>
   <NavBar />
   <div class="favorite-header-container">
@@ -16,8 +17,8 @@
       <p>No favorite movies yet</p>
     </div>
   </div>
-    
 </template>
+
 
 
   <script>
@@ -28,11 +29,13 @@
     components: {
       NavBar
     },
+
     data(){
       return{
         favoriteMovies: [] // Array to store the favorite movies
       };
     },
+
     async created(){
       // Fetching the favorite movies from session storage
       const favoriteMovies = JSON.parse(sessionStorage.getItem('favorites')) || [];
@@ -41,7 +44,10 @@
   }
   </script>
   
+
+
   <style scoped>
+  /*Styling of the header container*/
   .favorite-header-container {
     display: flex;
     justify-content: flex-start;
@@ -50,18 +56,19 @@
     
   }
 
+  /*Styling of the header text*/
   .favorite-header-container h1{
     font-size: 40px;
     color: white;
     font-weight: bold;
   }
 
+  /*Styling of the favorite movie container*/
   .favorite-movie-container {
     display: flex;
     justify-content: flex-start;
   }
   
-
   .favorite-movie-list {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -97,6 +104,7 @@
       cursor: pointer;
   }
 
+  /*Styling of the no movies text*/
   .no-movies-text{
     display: flex;
     justify-content: center;
@@ -109,22 +117,23 @@
     color: white;
   }
 
+   /*Styling for mobile devices*/
   @media only screen and (max-width: 850px){
 
-.favorite-movie-container{
-display: flex;
-justify-content: center;
-width: 850px;
-}
+  .favorite-movie-container{
+  display: flex;
+  justify-content: center;
+  width: 850px;
+  }
 
-.favorite-movie-list{
-grid-template-columns: repeat(3, 1fr);
-}
+  .favorite-movie-list{
+  grid-template-columns: repeat(3, 1fr);
+  }
 
-.load-more-button-container{
-display: flex;
-justify-content: center;
-width: 850px
-}
-}
+  .load-more-button-container{
+  display: flex;
+  justify-content: center;
+  width: 850px
+  }
+  }
   </style>

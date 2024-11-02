@@ -1,3 +1,4 @@
+<!-- HTML code to display best voted movies by default and then search by best voted -->
 <template>
   <NavBar/>
   <div class="search-bar">
@@ -19,6 +20,8 @@
     </div>
 </template>
   
+
+
 <script>
 import { getPopularMovies, searchMovies } from '@/services/tmdbService'; //importing functions from tmdbService
 import NavBar from './NavBar.vue'; //importing the NavBar component
@@ -28,6 +31,7 @@ import NavBar from './NavBar.vue'; //importing the NavBar component
     components: {
       NavBar
     },
+
     data(){
       return{
         popularMovies: [],
@@ -35,11 +39,12 @@ import NavBar from './NavBar.vue'; //importing the NavBar component
         moviesPerPage: 12, 
         currentPage: 1, 
         hasMoreMovies: true,
-        searchQuery: '',
-        isSearching: false,
-        searchPage: 1
+        searchQuery: '', 
+        isSearching: false, //Boolean to check if the user is searching
+        searchPage: 1 //Page number for the search results
       }
     },
+
     async created(){
       try{
         // Fetching the first page of popular movies
@@ -49,6 +54,7 @@ import NavBar from './NavBar.vue'; //importing the NavBar component
         console.error('Error fetching data', error);
     }
     },
+
   methods: {
     // Function to load more movies. Calculates the next set of movies to be displayed and adds them to the displayedMovies array
     async loadMoreMovies() {
@@ -57,6 +63,7 @@ import NavBar from './NavBar.vue'; //importing the NavBar component
         if(this.isSearching){
           const response = await searchMovies(this.searchQuery, this.searchPage)
           
+          //Checking if there are more movies to display
           if(response.results.length > 0){
             this.displayedMovies = this.displayedMovies.concat(response.results);
             this.searchPage++;
@@ -68,7 +75,8 @@ import NavBar from './NavBar.vue'; //importing the NavBar component
         else{
           //Fetching the popular movies
           const movies = await getPopularMovies(this.currentPage);
-
+        
+        //Checking if there are more movies to display
         if (movies.length > 0){
           this.popularMovies = this.popularMovies.concat(movies); 
           this.displayedMovies = this.popularMovies.slice(0, this.currentPage * this.moviesPerPage);
@@ -83,8 +91,9 @@ import NavBar from './NavBar.vue'; //importing the NavBar component
         console.error('Error fetching movies', error);
       }
     },
+    //Function to search for movies
     async searchMovies(){
-      //Function to search for movies
+      //Checking if the search input is not empty
       if(this.searchQuery !== ''){
         try{
           this.isSearching = true;
@@ -92,9 +101,9 @@ import NavBar from './NavBar.vue'; //importing the NavBar component
           //Fetching the movies based on the search input
           const response = await searchMovies(this.searchQuery);
 
+          //Checking if there are movies to display
           if(response.results && response.results.length > 0){
-            //sort the movies by best voted
-            const sortedResults = response.results.sort((a, b) => b.vote_count - a.vote_count);
+            const sortedResults = response.results.sort((a, b) => b.vote_count - a.vote_count); //sort the movies by best voted
             this.displayedMovies = sortedResults; //Setting the displayed movies
             this.hasMoreMovies = this.searchPage < response.total_pages; //Checking if there are more movies
           }
@@ -104,7 +113,6 @@ import NavBar from './NavBar.vue'; //importing the NavBar component
             this.hasMoreMovies = false;
           }
         }
-
         catch(error){
           console.error('Error fetching movies', error);
         }
@@ -120,6 +128,8 @@ import NavBar from './NavBar.vue'; //importing the NavBar component
 };
 </script>
   
+
+
 <style scoped>
   /*Styling of the search bar*/
   .search-bar{
@@ -216,6 +226,7 @@ import NavBar from './NavBar.vue'; //importing the NavBar component
     transform: scale(1.1);
   }
 
+   /*Styling for mobile devices*/
   @media only screen and (max-width: 850px){
 
     .search-bar{

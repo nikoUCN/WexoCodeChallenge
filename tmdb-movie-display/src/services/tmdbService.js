@@ -1,3 +1,4 @@
+// Using axios to fetch data from the tmdb api
 import axios from 'axios';
 
 const API_KEY = process.env.VUE_APP_TMDB_API_KEY;
@@ -16,7 +17,7 @@ export const getGenres = async () => {
     }
 }
 
-// fetching movie backdrop, for my HomePage background
+// fetching movie backdrop, for HomePage background
 export const getHomePicture = async () =>{
     try{
         const response = await axios.get(`${BASE_URL}/movie/129/images?api_key=${API_KEY}`);
@@ -39,6 +40,7 @@ export const getPopularMovies = async (page = 1) =>{
     }
 }
 
+// Fetching top rated movies from tmdb api displayed on MoviePage
 export const getBestVotedMovies = async (page = 1) => {
     try{
         const response = await axios.get(`${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=vote_count.desc&page=${page}`);
@@ -49,6 +51,8 @@ export const getBestVotedMovies = async (page = 1) => {
     }
 
 }
+
+// Fetching movies by genre from tmdb api
 export const getMoviesByGenre = async (genreId, page = 1) =>{
     try{
         const response = await axios.get(`${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=vote_count.desc&with_genres=${genreId}&page=${page}`);
@@ -62,6 +66,7 @@ export const getMoviesByGenre = async (genreId, page = 1) =>{
     }
 }
 
+// Fetching movie details from tmdb api to display on DetailsPage - credits appendend to get cast and crew
 export const getMovieDetails = async (movieId) =>{
     try{
         const response = await axios.get(`${BASE_URL}/movie/${movieId}?api_key=${API_KEY}&append_to_response=credits`);
@@ -72,6 +77,7 @@ export const getMovieDetails = async (movieId) =>{
     }
 }
 
+// Fetching movies by search query from tmdb api
 export const searchMovies = async (query, page = 1) => {
     try{
         const response = await axios.get(`${BASE_URL}/search/movie?api_key=${API_KEY}&query=${query}&page=${page}&include_adult=false`);

@@ -1,3 +1,4 @@
+<!-- HTML code to display image, title, overview, genres, release date, directors, actors and rating. Also a favorite icon to favorite the movie -->
 <template>
     <div class="movie-details-container" v-if="movie && movie.poster_path">
       <NavBar />
@@ -35,6 +36,8 @@
      </div>
   </template>
   
+
+  
   <script>
   import { getMovieDetails } from '@/services/tmdbService';
   import NavBar from './NavBar.vue';
@@ -44,6 +47,7 @@
     components: {
       NavBar
     },  
+
     data(){
       return{
         movie: null, // Object to store the movie 
@@ -54,6 +58,7 @@
         isFavorite: false
       };
     },
+
     async created(){
       try{
         // Fetching the movie details
@@ -62,7 +67,7 @@
         this.movie = movie; 
         this.movieGenres = movie.genres.map(genre => genre.name).join(', ');
         this.movieDirectors = movie.credits.crew.filter(crew => crew.job === 'Director').map(director => director.name).join(', ');
-        this.movieActors = movie.credits.cast.slice(0, 3).map(actor => actor.name).join(', '); // Joining the actors
+        this.movieActors = movie.credits.cast.slice(0, 3).map(actor => actor.name).join(', '); // Joining the actors to be display by a comma
         this.isFavorite = this.checkIfFavorite(movie.id);
         console.log(`Movie ID: ${movie.id}, isFavorite: ${this.isFavorite}`);
       }
@@ -70,6 +75,7 @@
         console.error('Error fetching data', error);
       }
     },
+
     methods: {
       // Method to toggle favorite status
       toggleFavorite(){
@@ -97,6 +103,7 @@
         this.isFavorite = this.checkIfFavorite(movieId);
         console.log(`Toggled isFavorite to: ${this.isFavorite}`);
       },
+
       // Method to check if the movie is a favorite
       checkIfFavorite(movieId){
         const favorites = JSON.parse(sessionStorage.getItem('favorites')) || [];
@@ -106,7 +113,9 @@
 }
   </script>
   
-  <style>
+
+
+  <style scoped>
   /*Styling of the movie details container*/
   .movie-details-container{
       display: flex;
@@ -243,6 +252,7 @@
       color: rgb(108, 73, 235);
   }
 
+  /*Styling for mobile devices*/
   @media only screen and (max-width: 850px){
 
     .movie-details-container{

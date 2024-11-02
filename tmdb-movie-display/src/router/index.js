@@ -5,7 +5,7 @@ import FavoritesPage from '../components/FavoritesPage.vue';
 import DetailsPage from '../components/DetailsPage.vue';
 import SearchPage from '../components/SearchPage.vue';
 
-//defining routes 
+//defining routes to navigate on the website
 const routes = [
     { path: '/', component: HomePage },
     { path: '/home', component: HomePage },
@@ -15,7 +15,7 @@ const routes = [
     { path: '/search', component: SearchPage}
 ];
 
-//new instance of VueRouter with the routes defined earlier
+//new instance of VueRouter with the routes defined earlier and returning to top of the page when navigating
 const router = createRouter({
     history: createWebHistory(),
     routes,

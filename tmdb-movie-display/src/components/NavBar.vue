@@ -1,3 +1,4 @@
+<!-- HTML code to display the navigation bar-->
 <template>
     <div id="header">
         <nav>
@@ -8,7 +9,7 @@
                     </router-link>
                 </li>
                 <div class="nav-links">
-                    <!-- routing to the home, movie and favorites page using my routing/index.js-->
+                    <!-- routing to the home, movie, search and favorites page using routing/index.js-->
                     <li :class="{active: isActiveHome}"><router-link to="/home">Home</router-link></li>
                     <li :class="{active: isActiveMovies}"><router-link to="/movies">Movies</router-link></li>
                     <li @mouseover="isHovered = true" @mouseleave="isHovered = false">
@@ -29,11 +30,10 @@
   
 
 
-
-
   <script>
   export default {
     name: 'NavBar',
+
     data(){
       return{
         isHovered: false,
@@ -43,7 +43,9 @@
         isActiveSearch: false
       };
     },
+
     watch:{
+        //Checking the current route and setting the active class
         $route(to){
             this.isActiveHome = to.path === '/home';
             this.isActiveMovies = to.path === '/movies';
@@ -51,7 +53,9 @@
             this.isActiveSearch = to.path === '/search';
         }
     },
+
     created(){
+        //Checking the current route and setting the active class
         this.isActiveHome = this.$route.path === '/home';
         this.isActiveMovies = this.$route.path === '/movies';
         this.isActiveFavorite = this.$route.path === '/favorites';
@@ -62,10 +66,9 @@
   
 
 
-
   <style scoped>
 
-/*Styling of the navigation bar*/
+    /*Styling of the navigation bar*/
 nav{
     width: 100%;
     display: flex;
@@ -115,6 +118,7 @@ nav ul li.active a{
     color: rgb(108, 73, 235);
 }
 
+/*Styling of the nav bar icons */
 nav ul li .fa-icon{
     font-size: 20px;
     color: white;
@@ -129,6 +133,7 @@ nav ul li .fa-icon.active{
     color: rgb(108, 73, 235);
 }
 
+/*Styling of the logo*/
 nav ul .logo{
     padding: 20px 40px;
 }
@@ -156,39 +161,38 @@ nav ul .logo:hover p{
     color: rgb(108, 73, 235);
 }
 
-
-
+/*Styling for mobile devices*/
 @media  (max-width: 850px) {
 
-    .nav-links{
-        padding: 40px 20px;
-        gap: 30px;
-    }
+.nav-links{
+    padding: 40px 20px;
+    gap: 30px;
+}
     
-    nav ul li a{
-        margin: 0;
-    }
+nav ul li a{
+     margin: 0;
+}
 
-    nav ul li{
-        margin: 0;
-    }
+nav ul li{
+    margin: 0;
+}
 
-    nav ul{
-        display: flex;
-        justify-content: space-between;
-        margin: 0;
-    }
+nav ul{
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
 
-    nav ul li .fa-icon{
-        display: block;
-        margin: 0;
-    }
+nav ul li .fa-icon{
+    display: block;
+    margin: 0;
+}
 
-    nav ul li .fa-icon.active{
-        display: block;
-    }
+nav ul li .fa-icon.active{
+    display: block;
+}
 
-    nav ul .logo{
+nav ul .logo{
     padding: 20px;
 }
 
